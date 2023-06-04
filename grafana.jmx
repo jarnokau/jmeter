@@ -74,6 +74,11 @@
             <stringProp name="Argument.value">1</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
+          <elementProp name="errors" elementType="Argument">
+            <stringProp name="Argument.name">errors</stringProp>
+            <stringProp name="Argument.value">0</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
         </collectionProp>
       </Arguments>
       <hashTree/>
@@ -100,7 +105,7 @@
         <boolProp name="ThreadGroup.scheduler">true</boolProp>
         <stringProp name="ThreadGroup.duration">300</stringProp>
         <stringProp name="ThreadGroup.delay"></stringProp>
-        <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
+        <boolProp name="ThreadGroup.same_user_on_next_iteration">false</boolProp>
       </ThreadGroup>
       <hashTree>
         <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
@@ -139,31 +144,7 @@
           <stringProp name="CookieManager.policy">compatibility</stringProp>
         </CookieManager>
         <hashTree/>
-        <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="save timestamps to variables" enabled="true">
-          <stringProp name="cacheKey">true</stringProp>
-          <stringProp name="filename"></stringProp>
-          <stringProp name="parameters"></stringProp>
-          <stringProp name="script">//log.info(&quot;--------------------------------------------------&quot;);
-long c = Long.parseLong(vars.get(&quot;now&quot;));
-long d = c-1800000; //decrease 30 min from current time
-
-long epoch = c/1000;
-String dateRead = new java.text.SimpleDateFormat(&quot;yyyy-MM-dd HH:mm:ss.SSS&quot;).format(new java.util.Date (epoch*1000));
-String dateRead = dateRead.replace(&apos; &apos;,&apos;T&apos;);
-vars.put(&quot;readable_to&quot;,dateRead);
-vars.put(&quot;to_time&quot;,c.toString());
-
-long epoch = d/1000;
-String dateRead = new java.text.SimpleDateFormat(&quot;yyyy-MM-dd HH:mm:ss.SSS&quot;).format(new java.util.Date (epoch*1000));
-String dateRead = dateRead.replace(&apos; &apos;,&apos;T&apos;);
-vars.put(&quot;readable_from&quot;,dateRead);
-vars.put(&quot;from_time&quot;,d.toString()); 
-
-log.info(&quot;VUSERS on &quot;+vars.get(&quot;VUsers&quot;));</stringProp>
-          <stringProp name="scriptLanguage">java</stringProp>
-        </JSR223Sampler>
-        <hashTree/>
-        <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="Starting page with deafult view" enabled="true">
+        <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="1. Starting page with deafult view" enabled="true">
           <boolProp name="TransactionController.parent">true</boolProp>
         </TransactionController>
         <hashTree>
@@ -593,238 +574,35 @@ log.info(&quot;VUSERS on &quot;+vars.get(&quot;VUsers&quot;));</stringProp>
             </HeaderManager>
             <hashTree/>
           </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="01. Open Starting page 8" enabled="false">
-            <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
-            <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
-              <collectionProp name="Arguments.arguments">
-                <elementProp name="" elementType="HTTPArgument">
-                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                  <stringProp name="Argument.value">{&quot;queries&quot;:[{&quot;expr&quot;:&quot;instance_device:${List_A}:rate5m{job=~\&quot;(alertmanager|node|prometheus)\&quot;}&quot;,&quot;format&quot;:&quot;time_series&quot;,&quot;hide&quot;:false,&quot;intervalFactor&quot;:2,&quot;refId&quot;:&quot;B&quot;,&quot;step&quot;:4,&quot;target&quot;:&quot;&quot;,&quot;datasource&quot;:{&quot;type&quot;:&quot;prometheus&quot;,&quot;uid&quot;:&quot;000000008&quot;},&quot;exemplar&quot;:false,&quot;requestId&quot;:&quot;4B&quot;,&quot;utcOffsetSec&quot;:10800,&quot;legendFormat&quot;:&quot;&quot;,&quot;interval&quot;:&quot;&quot;,&quot;datasourceId&quot;:8,&quot;intervalMs&quot;:15000,&quot;maxDataPoints&quot;:1870}],&quot;range&quot;:{&quot;from&quot;:&quot;${readable_from}Z&quot;,&quot;to&quot;:&quot;${readable_from}Z&quot;,&quot;raw&quot;:{&quot;from&quot;:&quot;now-30m&quot;,&quot;to&quot;:&quot;now&quot;}},&quot;from&quot;:&quot;${from_time}&quot;,&quot;to&quot;:&quot;${to_time}&quot;}</stringProp>
-                  <stringProp name="Argument.metadata">=</stringProp>
-                </elementProp>
-              </collectionProp>
-            </elementProp>
-            <stringProp name="HTTPSampler.domain">${DOMAIN}</stringProp>
-            <stringProp name="HTTPSampler.port">443</stringProp>
-            <stringProp name="HTTPSampler.protocol">https</stringProp>
-            <stringProp name="HTTPSampler.contentEncoding">UTF-8</stringProp>
-            <stringProp name="HTTPSampler.path">/api/ds/query?ds_type=prometheus&amp;requestId=Q100</stringProp>
-            <stringProp name="HTTPSampler.method">POST</stringProp>
-            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
-            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
-            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
-            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
-            <boolProp name="HTTPSampler.BROWSER_COMPATIBLE_MULTIPART">true</boolProp>
-            <boolProp name="HTTPSampler.image_parser">true</boolProp>
-            <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
-            <stringProp name="HTTPSampler.implementation">HttpClient4</stringProp>
-            <stringProp name="HTTPSampler.connect_timeout"></stringProp>
-            <stringProp name="HTTPSampler.response_timeout"></stringProp>
-          </HTTPSamplerProxy>
-          <hashTree>
-            <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
-              <collectionProp name="HeaderManager.headers">
-                <elementProp name="Host" elementType="Header">
-                  <stringProp name="Header.name">Host</stringProp>
-                  <stringProp name="Header.value">play.grafana.org</stringProp>
-                </elementProp>
-                <elementProp name="User-Agent" elementType="Header">
-                  <stringProp name="Header.name">User-Agent</stringProp>
-                  <stringProp name="Header.value">Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/113.0</stringProp>
-                </elementProp>
-                <elementProp name="Accept" elementType="Header">
-                  <stringProp name="Header.name">Accept</stringProp>
-                  <stringProp name="Header.value">application/json, text/plain, */*</stringProp>
-                </elementProp>
-                <elementProp name="Accept-Language" elementType="Header">
-                  <stringProp name="Header.name">Accept-Language</stringProp>
-                  <stringProp name="Header.value">en-US,en;q=0.5</stringProp>
-                </elementProp>
-                <elementProp name="Accept-Encoding" elementType="Header">
-                  <stringProp name="Header.name">Accept-Encoding</stringProp>
-                  <stringProp name="Header.value">gzip, deflate, br</stringProp>
-                </elementProp>
-                <elementProp name="Referer" elementType="Header">
-                  <stringProp name="Header.name">Referer</stringProp>
-                  <stringProp name="Header.value">https://play.grafana.org/d/000000063/prometheus-templating?orgId=1&amp;viewPanel=4</stringProp>
-                </elementProp>
-                <elementProp name="content-type" elementType="Header">
-                  <stringProp name="Header.name">content-type</stringProp>
-                  <stringProp name="Header.value">application/json</stringProp>
-                </elementProp>
-                <elementProp name="x-dashboard-uid" elementType="Header">
-                  <stringProp name="Header.name">x-dashboard-uid</stringProp>
-                  <stringProp name="Header.value">000000063</stringProp>
-                </elementProp>
-                <elementProp name="x-datasource-uid" elementType="Header">
-                  <stringProp name="Header.name">x-datasource-uid</stringProp>
-                  <stringProp name="Header.value">000000008</stringProp>
-                </elementProp>
-                <elementProp name="x-grafana-org-id" elementType="Header">
-                  <stringProp name="Header.name">x-grafana-org-id</stringProp>
-                  <stringProp name="Header.value">1</stringProp>
-                </elementProp>
-                <elementProp name="x-panel-id" elementType="Header">
-                  <stringProp name="Header.name">x-panel-id</stringProp>
-                  <stringProp name="Header.value">4</stringProp>
-                </elementProp>
-                <elementProp name="x-plugin-id" elementType="Header">
-                  <stringProp name="Header.name">x-plugin-id</stringProp>
-                  <stringProp name="Header.value">prometheus</stringProp>
-                </elementProp>
-                <elementProp name="Content-Length" elementType="Header">
-                  <stringProp name="Header.name">Content-Length</stringProp>
-                  <stringProp name="Header.value">555</stringProp>
-                </elementProp>
-                <elementProp name="Origin" elementType="Header">
-                  <stringProp name="Header.name">Origin</stringProp>
-                  <stringProp name="Header.value">https://play.grafana.org</stringProp>
-                </elementProp>
-                <elementProp name="Connection" elementType="Header">
-                  <stringProp name="Header.name">Connection</stringProp>
-                  <stringProp name="Header.value">keep-alive</stringProp>
-                </elementProp>
-                <elementProp name="Cookie" elementType="Header">
-                  <stringProp name="Header.name">Cookie</stringProp>
-                  <stringProp name="Header.value">rl_session=RudderEncrypt%3AU2FsdGVkX19Lx4aUWsa6tGeGuInJeVH%2Bn7rXbCPucxpQ66u9DYOI1t5jFJyIiCqYpBT4%2B7V0Lg4yqFSK3TntrOmOTsofTCA0zmnJGvuF4Un%2BOkwzs4PsVJetZS4lvoevUYViWmLpBYQkVpeD1MdeVQ%3D%3D; rl_anonymous_id=RudderEncrypt%3AU2FsdGVkX1%2Br6XaNN80B0OMHH69t1jBWj8wDquO28X7Pb9u%2FXiEKPdGUnyi%2BcLNyeijAjah1heiyX%2BzL2NIprA%3D%3D; rl_user_id=RudderEncrypt%3AU2FsdGVkX188RuWNUHnsLsjQNX9v2L%2FOjAtOtG1nI0bbIQkbdw4DeDEHtPiefsGJ; rl_group_id=RudderEncrypt%3AU2FsdGVkX1%2FEJACsVPn6YJ%2FJQPXzOxUQBYg4Nc3MlxI%3D; rl_trait=RudderEncrypt%3AU2FsdGVkX1%2BO3za4K1xDXWPEjk176afdrEXgcjrF9yObDWsyaRDZxICkPPY1tNZafB7UBy0DYyzI%2BkNMKR5g4w%3D%3D; rl_group_trait=RudderEncrypt%3AU2FsdGVkX1%2BZVrmtq7H7%2B8Fbdwzjzkl%2BX3oZe4cawAE%3D; rl_page_init_referrer=RudderEncrypt%3AU2FsdGVkX184HaCBn22oy1FeY5GUWdLJJ2MfywI3Usw%3D; rl_page_init_referring_domain=RudderEncrypt%3AU2FsdGVkX1%2BtokxdW1Yi5Gcm5MNzFXBNxAsX9UV3AYc%3D; at_check=true; mbox=session#56e9e69e83ab4d7a9cd7be747930dcc4#1685640679</stringProp>
-                </elementProp>
-                <elementProp name="Sec-Fetch-Dest" elementType="Header">
-                  <stringProp name="Header.name">Sec-Fetch-Dest</stringProp>
-                  <stringProp name="Header.value">empty</stringProp>
-                </elementProp>
-                <elementProp name="Sec-Fetch-Mode" elementType="Header">
-                  <stringProp name="Header.name">Sec-Fetch-Mode</stringProp>
-                  <stringProp name="Header.value">cors</stringProp>
-                </elementProp>
-                <elementProp name="Sec-Fetch-Site" elementType="Header">
-                  <stringProp name="Header.name">Sec-Fetch-Site</stringProp>
-                  <stringProp name="Header.value">same-origin</stringProp>
-                </elementProp>
-                <elementProp name="TE" elementType="Header">
-                  <stringProp name="Header.name">TE</stringProp>
-                  <stringProp name="Header.value">trailers</stringProp>
-                </elementProp>
-              </collectionProp>
-            </HeaderManager>
-            <hashTree/>
-          </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="01. Open Starting page 8" enabled="false">
-            <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
-            <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
-              <collectionProp name="Arguments.arguments">
-                <elementProp name="" elementType="HTTPArgument">
-                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                  <stringProp name="Argument.value">{&quot;queries&quot;:[{&quot;expr&quot;:&quot;instance_device:${List_A}:rate5m{job=~\&quot;(alertmanager|node|prometheus)\&quot;}&quot;,&quot;format&quot;:&quot;time_series&quot;,&quot;hide&quot;:false,&quot;intervalFactor&quot;:2,&quot;refId&quot;:&quot;B&quot;,&quot;step&quot;:4,&quot;target&quot;:&quot;&quot;,&quot;datasource&quot;:{&quot;type&quot;:&quot;prometheus&quot;,&quot;uid&quot;:&quot;000000008&quot;},&quot;exemplar&quot;:false,&quot;requestId&quot;:&quot;4B&quot;,&quot;utcOffsetSec&quot;:10800,&quot;legendFormat&quot;:&quot;&quot;,&quot;interval&quot;:&quot;&quot;,&quot;datasourceId&quot;:8,&quot;intervalMs&quot;:15000,&quot;maxDataPoints&quot;:1870}],&quot;range&quot;:{&quot;from&quot;:&quot;2023-05-31T18:17:31.600Z&quot;,&quot;to&quot;:&quot;2023-05-31T18:47:31.600Z&quot;,&quot;raw&quot;:{&quot;from&quot;:&quot;now-30m&quot;,&quot;to&quot;:&quot;now&quot;}},&quot;from&quot;:&quot;1685552537&quot;,&quot;to&quot;:&quot;1685554337&quot;}</stringProp>
-                  <stringProp name="Argument.metadata">=</stringProp>
-                </elementProp>
-              </collectionProp>
-            </elementProp>
-            <stringProp name="HTTPSampler.domain">${DOMAIN}</stringProp>
-            <stringProp name="HTTPSampler.port">443</stringProp>
-            <stringProp name="HTTPSampler.protocol">https</stringProp>
-            <stringProp name="HTTPSampler.contentEncoding">UTF-8</stringProp>
-            <stringProp name="HTTPSampler.path">/api/ds/query?ds_type=prometheus&amp;requestId=Q100</stringProp>
-            <stringProp name="HTTPSampler.method">POST</stringProp>
-            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
-            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
-            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
-            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
-            <boolProp name="HTTPSampler.BROWSER_COMPATIBLE_MULTIPART">true</boolProp>
-            <boolProp name="HTTPSampler.image_parser">true</boolProp>
-            <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
-            <stringProp name="HTTPSampler.implementation">HttpClient4</stringProp>
-            <stringProp name="HTTPSampler.connect_timeout"></stringProp>
-            <stringProp name="HTTPSampler.response_timeout"></stringProp>
-          </HTTPSamplerProxy>
-          <hashTree>
-            <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
-              <collectionProp name="HeaderManager.headers">
-                <elementProp name="Host" elementType="Header">
-                  <stringProp name="Header.name">Host</stringProp>
-                  <stringProp name="Header.value">play.grafana.org</stringProp>
-                </elementProp>
-                <elementProp name="User-Agent" elementType="Header">
-                  <stringProp name="Header.name">User-Agent</stringProp>
-                  <stringProp name="Header.value">Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/113.0</stringProp>
-                </elementProp>
-                <elementProp name="Accept" elementType="Header">
-                  <stringProp name="Header.name">Accept</stringProp>
-                  <stringProp name="Header.value">application/json, text/plain, */*</stringProp>
-                </elementProp>
-                <elementProp name="Accept-Language" elementType="Header">
-                  <stringProp name="Header.name">Accept-Language</stringProp>
-                  <stringProp name="Header.value">en-US,en;q=0.5</stringProp>
-                </elementProp>
-                <elementProp name="Accept-Encoding" elementType="Header">
-                  <stringProp name="Header.name">Accept-Encoding</stringProp>
-                  <stringProp name="Header.value">gzip, deflate, br</stringProp>
-                </elementProp>
-                <elementProp name="Referer" elementType="Header">
-                  <stringProp name="Header.name">Referer</stringProp>
-                  <stringProp name="Header.value">https://play.grafana.org/d/000000063/prometheus-templating?orgId=1&amp;viewPanel=4</stringProp>
-                </elementProp>
-                <elementProp name="content-type" elementType="Header">
-                  <stringProp name="Header.name">content-type</stringProp>
-                  <stringProp name="Header.value">application/json</stringProp>
-                </elementProp>
-                <elementProp name="x-dashboard-uid" elementType="Header">
-                  <stringProp name="Header.name">x-dashboard-uid</stringProp>
-                  <stringProp name="Header.value">000000063</stringProp>
-                </elementProp>
-                <elementProp name="x-datasource-uid" elementType="Header">
-                  <stringProp name="Header.name">x-datasource-uid</stringProp>
-                  <stringProp name="Header.value">000000008</stringProp>
-                </elementProp>
-                <elementProp name="x-grafana-org-id" elementType="Header">
-                  <stringProp name="Header.name">x-grafana-org-id</stringProp>
-                  <stringProp name="Header.value">1</stringProp>
-                </elementProp>
-                <elementProp name="x-panel-id" elementType="Header">
-                  <stringProp name="Header.name">x-panel-id</stringProp>
-                  <stringProp name="Header.value">4</stringProp>
-                </elementProp>
-                <elementProp name="x-plugin-id" elementType="Header">
-                  <stringProp name="Header.name">x-plugin-id</stringProp>
-                  <stringProp name="Header.value">prometheus</stringProp>
-                </elementProp>
-                <elementProp name="Content-Length" elementType="Header">
-                  <stringProp name="Header.name">Content-Length</stringProp>
-                  <stringProp name="Header.value">555</stringProp>
-                </elementProp>
-                <elementProp name="Origin" elementType="Header">
-                  <stringProp name="Header.name">Origin</stringProp>
-                  <stringProp name="Header.value">https://play.grafana.org</stringProp>
-                </elementProp>
-                <elementProp name="Connection" elementType="Header">
-                  <stringProp name="Header.name">Connection</stringProp>
-                  <stringProp name="Header.value">keep-alive</stringProp>
-                </elementProp>
-                <elementProp name="Cookie" elementType="Header">
-                  <stringProp name="Header.name">Cookie</stringProp>
-                  <stringProp name="Header.value">rl_session=RudderEncrypt%3AU2FsdGVkX19Lx4aUWsa6tGeGuInJeVH%2Bn7rXbCPucxpQ66u9DYOI1t5jFJyIiCqYpBT4%2B7V0Lg4yqFSK3TntrOmOTsofTCA0zmnJGvuF4Un%2BOkwzs4PsVJetZS4lvoevUYViWmLpBYQkVpeD1MdeVQ%3D%3D; rl_anonymous_id=RudderEncrypt%3AU2FsdGVkX1%2Br6XaNN80B0OMHH69t1jBWj8wDquO28X7Pb9u%2FXiEKPdGUnyi%2BcLNyeijAjah1heiyX%2BzL2NIprA%3D%3D; rl_user_id=RudderEncrypt%3AU2FsdGVkX188RuWNUHnsLsjQNX9v2L%2FOjAtOtG1nI0bbIQkbdw4DeDEHtPiefsGJ; rl_group_id=RudderEncrypt%3AU2FsdGVkX1%2FEJACsVPn6YJ%2FJQPXzOxUQBYg4Nc3MlxI%3D; rl_trait=RudderEncrypt%3AU2FsdGVkX1%2BO3za4K1xDXWPEjk176afdrEXgcjrF9yObDWsyaRDZxICkPPY1tNZafB7UBy0DYyzI%2BkNMKR5g4w%3D%3D; rl_group_trait=RudderEncrypt%3AU2FsdGVkX1%2BZVrmtq7H7%2B8Fbdwzjzkl%2BX3oZe4cawAE%3D; rl_page_init_referrer=RudderEncrypt%3AU2FsdGVkX184HaCBn22oy1FeY5GUWdLJJ2MfywI3Usw%3D; rl_page_init_referring_domain=RudderEncrypt%3AU2FsdGVkX1%2BtokxdW1Yi5Gcm5MNzFXBNxAsX9UV3AYc%3D; at_check=true; mbox=session#56e9e69e83ab4d7a9cd7be747930dcc4#1685640679</stringProp>
-                </elementProp>
-                <elementProp name="Sec-Fetch-Dest" elementType="Header">
-                  <stringProp name="Header.name">Sec-Fetch-Dest</stringProp>
-                  <stringProp name="Header.value">empty</stringProp>
-                </elementProp>
-                <elementProp name="Sec-Fetch-Mode" elementType="Header">
-                  <stringProp name="Header.name">Sec-Fetch-Mode</stringProp>
-                  <stringProp name="Header.value">cors</stringProp>
-                </elementProp>
-                <elementProp name="Sec-Fetch-Site" elementType="Header">
-                  <stringProp name="Header.name">Sec-Fetch-Site</stringProp>
-                  <stringProp name="Header.value">same-origin</stringProp>
-                </elementProp>
-                <elementProp name="TE" elementType="Header">
-                  <stringProp name="Header.name">TE</stringProp>
-                  <stringProp name="Header.value">trailers</stringProp>
-                </elementProp>
-              </collectionProp>
-            </HeaderManager>
-            <hashTree/>
-          </hashTree>
+          <JSR223PreProcessor guiclass="TestBeanGUI" testclass="JSR223PreProcessor" testname="JSR223 PreProcessor" enabled="true">
+            <stringProp name="scriptLanguage">java</stringProp>
+            <stringProp name="parameters"></stringProp>
+            <stringProp name="filename"></stringProp>
+            <stringProp name="cacheKey">true</stringProp>
+            <stringProp name="script">//log.info(&quot;--------------------------------------------------&quot;);
+long c = Long.parseLong(vars.get(&quot;now&quot;));
+long d = c-1800000; //decrease 30 min from current time
+
+long epoch = c/1000;
+String dateRead = new java.text.SimpleDateFormat(&quot;yyyy-MM-dd HH:mm:ss.SSS&quot;).format(new java.util.Date (epoch*1000));
+String dateRead = dateRead.replace(&apos; &apos;,&apos;T&apos;);
+vars.put(&quot;readable_to&quot;,dateRead);
+vars.put(&quot;to_time&quot;,c.toString());
+
+long epoch = d/1000;
+String dateRead = new java.text.SimpleDateFormat(&quot;yyyy-MM-dd HH:mm:ss.SSS&quot;).format(new java.util.Date (epoch*1000));
+String dateRead = dateRead.replace(&apos; &apos;,&apos;T&apos;);
+vars.put(&quot;readable_from&quot;,dateRead);
+vars.put(&quot;from_time&quot;,d.toString()); 
+
+vars.put(&quot;got_data&quot;,&quot;1&quot;);
+vars.put(&quot;Q_number&quot;,&quot;102&quot;);
+
+</stringProp>
+          </JSR223PreProcessor>
+          <hashTree/>
         </hashTree>
-        <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="view -${List_A} - Last 30 min" enabled="true">
+        <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="2. view -${List_A} - Last 30 min" enabled="true">
           <boolProp name="TransactionController.parent">true</boolProp>
         </TransactionController>
         <hashTree>
@@ -1011,7 +789,7 @@ log.info(&quot;VUSERS on &quot;+vars.get(&quot;VUsers&quot;));</stringProp>
             <hashTree/>
           </hashTree>
         </hashTree>
-        <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="view -${List_A} - Last 1 h" enabled="true">
+        <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="3. view -${List_A} - Last 1 h" enabled="true">
           <boolProp name="TransactionController.parent">true</boolProp>
         </TransactionController>
         <hashTree>
@@ -1215,21 +993,15 @@ vars.put(&quot;from_time&quot;,d.toString());
             <hashTree/>
           </hashTree>
         </hashTree>
-        <DebugSampler guiclass="TestBeanGUI" testclass="DebugSampler" testname="Debug Sampler" enabled="true">
-          <boolProp name="displayJMeterProperties">false</boolProp>
-          <boolProp name="displayJMeterVariables">true</boolProp>
-          <boolProp name="displaySystemProperties">false</boolProp>
-        </DebugSampler>
-        <hashTree/>
-        <WhileController guiclass="WhileControllerGui" testclass="WhileController" testname="While found data - Controller" enabled="true">
+        <WhileController guiclass="WhileControllerGui" testclass="WhileController" testname="While found data - repeat this" enabled="true">
           <stringProp name="WhileController.condition">${__javaScript(&quot;${got_data}&quot; == 1)}</stringProp>
         </WhileController>
         <hashTree>
-          <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="view -${List_A} - same time frame - 6 days earlier than previous" enabled="true">
+          <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="4. view -${List_A} - same time frame - 6 days earlier than previous" enabled="true">
             <boolProp name="TransactionController.parent">true</boolProp>
           </TransactionController>
           <hashTree>
-            <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="move 6 days to past" enabled="true">
+            <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="befoer each visit move time frame 6 days to past" enabled="true">
               <stringProp name="cacheKey">true</stringProp>
               <stringProp name="filename"></stringProp>
               <stringProp name="parameters"></stringProp>
@@ -1274,7 +1046,7 @@ vars.put(&quot;Q_number&quot;,Q.toString());
               <stringProp name="scriptLanguage">java</stringProp>
             </JSR223Sampler>
             <hashTree/>
-            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="1. Node - Disk IO now -  same time 6 days in past" enabled="true">
+            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="1. GET ${List_A} -  same time 6 days in past" enabled="true">
               <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
                 <collectionProp name="Arguments.arguments"/>
               </elementProp>
@@ -1282,7 +1054,7 @@ vars.put(&quot;Q_number&quot;,Q.toString());
               <stringProp name="HTTPSampler.port"></stringProp>
               <stringProp name="HTTPSampler.protocol">https</stringProp>
               <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-              <stringProp name="HTTPSampler.path">/api/annotations?from=1685124060000&amp;to=1685127660000&amp;limit=100&amp;matchAny=false&amp;dashboardUID=000000063</stringProp>
+              <stringProp name="HTTPSampler.path">/api/annotations?from=${from_time}to=${to_time}limit=100&amp;matchAny=false&amp;dashboardUID=000000063</stringProp>
               <stringProp name="HTTPSampler.method">GET</stringProp>
               <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
               <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
@@ -1347,7 +1119,7 @@ vars.put(&quot;Q_number&quot;,Q.toString());
               </HeaderManager>
               <hashTree/>
             </hashTree>
-            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="2.Node - Disk IO now -  same time 6 days in past" enabled="true">
+            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="2.POST ${List_A} -  same time 6 days in past" enabled="true">
               <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
               <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
                 <collectionProp name="Arguments.arguments">
@@ -1466,148 +1238,38 @@ vars.put(&quot;Q_number&quot;,Q.toString());
               </RegexExtractor>
               <hashTree/>
             </hashTree>
-            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="2.Node - Disk IO now -  same time 6 days in past" enabled="false">
-              <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
-              <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
-                <collectionProp name="Arguments.arguments">
-                  <elementProp name="" elementType="HTTPArgument">
-                    <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                    <stringProp name="Argument.value">{&quot;queries&quot;:[{&quot;expr&quot;:&quot;node_disk_io_now{job=~\&quot;(alertmanager|node|prometheus)\&quot;}&quot;,&quot;format&quot;:&quot;time_series&quot;,&quot;hide&quot;:false,&quot;intervalFactor&quot;:2,&quot;refId&quot;:&quot;B&quot;,&quot;step&quot;:4,&quot;target&quot;:&quot;&quot;,&quot;datasource&quot;:{&quot;type&quot;:&quot;prometheus&quot;,&quot;uid&quot;:&quot;000000008&quot;},&quot;exemplar&quot;:false,&quot;requestId&quot;:&quot;4B&quot;,&quot;utcOffsetSec&quot;:10800,&quot;legendFormat&quot;:&quot;&quot;,&quot;interval&quot;:&quot;&quot;,&quot;datasourceId&quot;:8,&quot;intervalMs&quot;:15000,&quot;maxDataPoints&quot;:1870}],&quot;range&quot;:{&quot;from&quot;:&quot;2023-05-26T18:01:00.000Z&quot;,&quot;to&quot;:&quot;2023-05-26T19:01:00.000Z&quot;,&quot;raw&quot;:{&quot;from&quot;:&quot;2023-05-26T18:01:00.000Z&quot;,&quot;to&quot;:&quot;2023-05-26T19:01:00.000Z&quot;}},&quot;from&quot;:&quot;1685124060000&quot;,&quot;to&quot;:&quot;1685127660000&quot;}</stringProp>
-                    <stringProp name="Argument.metadata">=</stringProp>
-                  </elementProp>
-                </collectionProp>
-              </elementProp>
-              <stringProp name="HTTPSampler.domain">${DOMAIN}</stringProp>
-              <stringProp name="HTTPSampler.port">443</stringProp>
-              <stringProp name="HTTPSampler.protocol">https</stringProp>
-              <stringProp name="HTTPSampler.contentEncoding">UTF-8</stringProp>
-              <stringProp name="HTTPSampler.path">/api/ds/query?ds_type=prometheus&amp;requestId=Q103</stringProp>
-              <stringProp name="HTTPSampler.method">POST</stringProp>
-              <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
-              <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
-              <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
-              <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
-              <boolProp name="HTTPSampler.BROWSER_COMPATIBLE_MULTIPART">true</boolProp>
-              <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
-              <stringProp name="HTTPSampler.connect_timeout"></stringProp>
-              <stringProp name="HTTPSampler.response_timeout"></stringProp>
-            </HTTPSamplerProxy>
-            <hashTree>
-              <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
-                <collectionProp name="HeaderManager.headers">
-                  <elementProp name="Host" elementType="Header">
-                    <stringProp name="Header.name">Host</stringProp>
-                    <stringProp name="Header.value">play.grafana.org</stringProp>
-                  </elementProp>
-                  <elementProp name="User-Agent" elementType="Header">
-                    <stringProp name="Header.name">User-Agent</stringProp>
-                    <stringProp name="Header.value">Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/113.0</stringProp>
-                  </elementProp>
-                  <elementProp name="Accept" elementType="Header">
-                    <stringProp name="Header.name">Accept</stringProp>
-                    <stringProp name="Header.value">application/json, text/plain, */*</stringProp>
-                  </elementProp>
-                  <elementProp name="Accept-Language" elementType="Header">
-                    <stringProp name="Header.name">Accept-Language</stringProp>
-                    <stringProp name="Header.value">en-US,en;q=0.5</stringProp>
-                  </elementProp>
-                  <elementProp name="Accept-Encoding" elementType="Header">
-                    <stringProp name="Header.name">Accept-Encoding</stringProp>
-                    <stringProp name="Header.value">gzip, deflate, br</stringProp>
-                  </elementProp>
-                  <elementProp name="Referer" elementType="Header">
-                    <stringProp name="Header.name">Referer</stringProp>
-                    <stringProp name="Header.value">https://play.grafana.org/d/000000063/prometheus-templating?orgId=1&amp;viewPanel=4&amp;var-jobs=alertmanager&amp;var-jobs=node&amp;var-jobs=prometheus&amp;var-disk_series=node_disk_io_now&amp;var-query=up%7Benv%3D%22demo%22,instance%3D%22demo.do.prometheus.io:9093%22,job%3D%22alertmanager%22%7D%201%201685638821000&amp;var-instance=demo.do.prometheus.io:9093&amp;var-instance2=demo.do.prometheus.io:9093&amp;var-last=alertmanager&amp;from=now-1h&amp;to=now</stringProp>
-                  </elementProp>
-                  <elementProp name="content-type" elementType="Header">
-                    <stringProp name="Header.name">content-type</stringProp>
-                    <stringProp name="Header.value">application/json</stringProp>
-                  </elementProp>
-                  <elementProp name="x-dashboard-uid" elementType="Header">
-                    <stringProp name="Header.name">x-dashboard-uid</stringProp>
-                    <stringProp name="Header.value">000000063</stringProp>
-                  </elementProp>
-                  <elementProp name="x-datasource-uid" elementType="Header">
-                    <stringProp name="Header.name">x-datasource-uid</stringProp>
-                    <stringProp name="Header.value">000000008</stringProp>
-                  </elementProp>
-                  <elementProp name="x-grafana-org-id" elementType="Header">
-                    <stringProp name="Header.name">x-grafana-org-id</stringProp>
-                    <stringProp name="Header.value">1</stringProp>
-                  </elementProp>
-                  <elementProp name="x-panel-id" elementType="Header">
-                    <stringProp name="Header.name">x-panel-id</stringProp>
-                    <stringProp name="Header.value">4</stringProp>
-                  </elementProp>
-                  <elementProp name="x-plugin-id" elementType="Header">
-                    <stringProp name="Header.name">x-plugin-id</stringProp>
-                    <stringProp name="Header.value">prometheus</stringProp>
-                  </elementProp>
-                  <elementProp name="Content-Length" elementType="Header">
-                    <stringProp name="Header.name">Content-Length</stringProp>
-                    <stringProp name="Header.value">522</stringProp>
-                  </elementProp>
-                  <elementProp name="Origin" elementType="Header">
-                    <stringProp name="Header.name">Origin</stringProp>
-                    <stringProp name="Header.value">https://play.grafana.org</stringProp>
-                  </elementProp>
-                  <elementProp name="Connection" elementType="Header">
-                    <stringProp name="Header.name">Connection</stringProp>
-                    <stringProp name="Header.value">keep-alive</stringProp>
-                  </elementProp>
-                  <elementProp name="Cookie" elementType="Header">
-                    <stringProp name="Header.name">Cookie</stringProp>
-                    <stringProp name="Header.value">rl_session=RudderEncrypt%3AU2FsdGVkX1%2FUJrvnOHm5huYaFRetV720yGzjv%2Fiv4423b7s8WtxZWk%2BgCdgGI%2Br5rIpVcsQYa2AATSIEc0sUYuJ3R0zsJc9bBke6WASpjBcJurvQBXxHtEYXsOCcUEuuTncIEEMDlXBw81yAzkYzHA%3D%3D; rl_anonymous_id=RudderEncrypt%3AU2FsdGVkX1%2FCDpsAl8a64WXXaxpYgCpDWaQZK4XV5fUf5ECnojgUSLoGV%2FU91luAjPWAlhpnTksQDFCm9aUpeA%3D%3D; rl_user_id=RudderEncrypt%3AU2FsdGVkX18wMRYKk73XqSVt4%2B5AI1%2FNx32sBCmU6vzNXGnR6Mx%2BF5einRUeDD7u; rl_group_id=RudderEncrypt%3AU2FsdGVkX19R39seamYbV8cxXs2g2E65lXVtdNRPGH0%3D; rl_trait=RudderEncrypt%3AU2FsdGVkX1%2BajRMYNiq6MWS6R8SioqLAexK0wQb7IuwTlZMeO4Kaf%2FJx4%2FH7xCnMJBmjzuRHxl73NDnpm1qGrA%3D%3D; rl_group_trait=RudderEncrypt%3AU2FsdGVkX18ttrzc0NQ9TKN%2B4v4tdtWApGHhDwL5DmI%3D; rl_page_init_referrer=RudderEncrypt%3AU2FsdGVkX184HaCBn22oy1FeY5GUWdLJJ2MfywI3Usw%3D; rl_page_init_referring_domain=RudderEncrypt%3AU2FsdGVkX1%2BtokxdW1Yi5Gcm5MNzFXBNxAsX9UV3AYc%3D; at_check=true</stringProp>
-                  </elementProp>
-                  <elementProp name="Sec-Fetch-Dest" elementType="Header">
-                    <stringProp name="Header.name">Sec-Fetch-Dest</stringProp>
-                    <stringProp name="Header.value">empty</stringProp>
-                  </elementProp>
-                  <elementProp name="Sec-Fetch-Mode" elementType="Header">
-                    <stringProp name="Header.name">Sec-Fetch-Mode</stringProp>
-                    <stringProp name="Header.value">cors</stringProp>
-                  </elementProp>
-                  <elementProp name="Sec-Fetch-Site" elementType="Header">
-                    <stringProp name="Header.name">Sec-Fetch-Site</stringProp>
-                    <stringProp name="Header.value">same-origin</stringProp>
-                  </elementProp>
-                </collectionProp>
-              </HeaderManager>
-              <hashTree/>
-              <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="Regular Expression Extractor" enabled="true">
-                <stringProp name="RegexExtractor.useHeaders">unescaped</stringProp>
-                <stringProp name="RegexExtractor.refname">finding_data</stringProp>
-                <stringProp name="RegexExtractor.regex">&quot;values&quot;:\[(.+?)\]</stringProp>
-                <stringProp name="RegexExtractor.template">$1$</stringProp>
-                <stringProp name="RegexExtractor.default"></stringProp>
-                <stringProp name="RegexExtractor.match_number"></stringProp>
-                <boolProp name="RegexExtractor.default_empty_value">true</boolProp>
-              </RegexExtractor>
-              <hashTree/>
-            </hashTree>
             <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="check was data found or not" enabled="true">
               <stringProp name="cacheKey">true</stringProp>
               <stringProp name="filename"></stringProp>
               <stringProp name="parameters"></stringProp>
               <stringProp name="script">String data=vars.get(&quot;finding_data&quot;);
-log.info(&quot;data pituus on &quot;+data.length());
+//log.info(&quot;data pituus on &quot;+data.length());
 if(data.length()&lt;5){
 	//log.info(&quot;alle kolme merkkiä&quot;);
 	vars.put(&quot;got_data&quot;,&quot;0&quot;);
+	//e_count =vars.get(&quot;errors&quot;);
+	//e_count=e_count + 1;
+	//vars.put(&quot;errors&quot;,e_count);
 }
 </stringProp>
               <stringProp name="scriptLanguage">java</stringProp>
             </JSR223Sampler>
             <hashTree/>
+            <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+              <collectionProp name="Asserion.test_strings">
+                <stringProp name="49">1</stringProp>
+              </collectionProp>
+              <stringProp name="Assertion.custom_message">Error! No Data found in given time frame.</stringProp>
+              <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
+              <boolProp name="Assertion.assume_success">false</boolProp>
+              <intProp name="Assertion.test_type">8</intProp>
+              <stringProp name="Assertion.scope">variable</stringProp>
+              <stringProp name="Scope.variable">got_data</stringProp>
+            </ResponseAssertion>
+            <hashTree/>
           </hashTree>
-          <DebugSampler guiclass="TestBeanGUI" testclass="DebugSampler" testname="Debug Sampler" enabled="true">
-            <boolProp name="displayJMeterProperties">false</boolProp>
-            <boolProp name="displayJMeterVariables">true</boolProp>
-            <boolProp name="displaySystemProperties">false</boolProp>
-          </DebugSampler>
-          <hashTree/>
         </hashTree>
-        <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree" enabled="true">
+        <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree" enabled="false">
           <boolProp name="ResultCollector.error_logging">false</boolProp>
           <objProp>
             <name>saveConfig</name>
@@ -1642,86 +1304,6 @@ if(data.length()&lt;5){
           </objProp>
           <stringProp name="filename">D:\JARNO\TYÖ\apache-jmeter-5.5\bin\grafana_aggregate.xml</stringProp>
         </ResultCollector>
-        <hashTree/>
-        <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="Transaction Controller" enabled="false">
-          <boolProp name="TransactionController.includeTimers">false</boolProp>
-          <boolProp name="TransactionController.parent">false</boolProp>
-        </TransactionController>
-        <hashTree/>
-        <WhileController guiclass="WhileControllerGui" testclass="WhileController" testname="While found data - Controller" enabled="false">
-          <stringProp name="WhileController.condition">${__javaScript(&quot;${got_data}&quot; == 1)}</stringProp>
-        </WhileController>
-        <hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="02. Open Disk_IO/Cisk read Bytes/Disk_rwite Bytes -page last 1h" enabled="true">
-            <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
-              <collectionProp name="Arguments.arguments"/>
-            </elementProp>
-            <stringProp name="HTTPSampler.domain">${DOMAIN}</stringProp>
-            <stringProp name="HTTPSampler.port"></stringProp>
-            <stringProp name="HTTPSampler.protocol">https</stringProp>
-            <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-            <stringProp name="HTTPSampler.path">/d/000000063/prometheus-templating?orgId=1&amp;viewPanel=4</stringProp>
-            <stringProp name="HTTPSampler.method">GET</stringProp>
-            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
-            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
-            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
-            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
-            <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
-            <stringProp name="HTTPSampler.connect_timeout"></stringProp>
-            <stringProp name="HTTPSampler.response_timeout"></stringProp>
-          </HTTPSamplerProxy>
-          <hashTree/>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="02. Open Disk_IO/Cisk read Bytes/Disk_rwite Bytes -page last 1h" enabled="true">
-            <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
-              <collectionProp name="Arguments.arguments"/>
-            </elementProp>
-            <stringProp name="HTTPSampler.domain">${DOMAIN}</stringProp>
-            <stringProp name="HTTPSampler.port"></stringProp>
-            <stringProp name="HTTPSampler.protocol">https</stringProp>
-            <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-            <stringProp name="HTTPSampler.path">/d/000000063/prometheus-templating?orgId=1&amp;viewPanel=4</stringProp>
-            <stringProp name="HTTPSampler.method">GET</stringProp>
-            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
-            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
-            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
-            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
-            <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
-            <stringProp name="HTTPSampler.connect_timeout"></stringProp>
-            <stringProp name="HTTPSampler.response_timeout"></stringProp>
-          </HTTPSamplerProxy>
-          <hashTree/>
-          <IfController guiclass="IfControllerPanel" testclass="IfController" testname="If Controller" enabled="true">
-            <stringProp name="TestPlan.comments">if data was found, get 6 days </stringProp>
-            <stringProp name="IfController.condition"></stringProp>
-            <boolProp name="IfController.evaluateAll">false</boolProp>
-            <boolProp name="IfController.useExpression">true</boolProp>
-          </IfController>
-          <hashTree/>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="03. same disk series, same time 6 days earlier" enabled="true">
-            <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
-              <collectionProp name="Arguments.arguments"/>
-            </elementProp>
-            <stringProp name="HTTPSampler.domain">${DOMAIN}</stringProp>
-            <stringProp name="HTTPSampler.port"></stringProp>
-            <stringProp name="HTTPSampler.protocol">https</stringProp>
-            <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-            <stringProp name="HTTPSampler.path">/d/000000063/prometheus-templating?orgId=1&amp;viewPanel=4</stringProp>
-            <stringProp name="HTTPSampler.method">GET</stringProp>
-            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
-            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
-            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
-            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
-            <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
-            <stringProp name="HTTPSampler.connect_timeout"></stringProp>
-            <stringProp name="HTTPSampler.response_timeout"></stringProp>
-          </HTTPSamplerProxy>
-          <hashTree/>
-        </hashTree>
-        <ForeachController guiclass="ForeachControlPanel" testclass="ForeachController" testname="ForEach Controller" enabled="false">
-          <stringProp name="ForeachController.inputVal"></stringProp>
-          <stringProp name="ForeachController.returnVal"></stringProp>
-          <boolProp name="ForeachController.useSeparator">true</boolProp>
-        </ForeachController>
         <hashTree/>
         <ResultCollector guiclass="StatVisualizer" testclass="ResultCollector" testname="Aggregate Report" enabled="true">
           <boolProp name="ResultCollector.error_logging">false</boolProp>
